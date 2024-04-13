@@ -1,0 +1,4 @@
+main: com.edbrn.Campfires.App
+name: Campfires
+version: 0.1
+api-version: 1.20
