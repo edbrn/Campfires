@@ -11,14 +11,9 @@ public class App extends JavaPlugin {
   @Override
   public void onEnable() {
     this.getLogger().info("[Campfires] Plugin enabled");
-    getServer().getPluginManager().registerEvents(new BlockPlaceEventListener(), this);
+    CampfiresConfig campfiresConfig = new CampfiresConfig(this.getLogger(), "campfires.json");
 
-    Map<String, ArrayList<Campfire>> campfiresConfig =
-        new CampfiresConfig(this.getLogger(), "campfires.json").getCampfires();
-    campfiresConfig.forEach(
-        (uuid, config) -> {
-          this.getLogger().info("[Campfires] " + uuid);
-        });
+    getServer().getPluginManager().registerEvents(new BlockPlaceEventListener(campfiresConfig), this);
   }
 
   @Override

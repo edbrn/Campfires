@@ -8,7 +8,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
+import java.util.logging.Logger;
+
 public class BlockPlaceEventListener implements Listener {
+  private CampfiresConfig campfiresConfig;
+
+  public BlockPlaceEventListener(CampfiresConfig campfiresConfig) {
+    this.campfiresConfig = campfiresConfig;
+  }
+
   @EventHandler
   public void onBlockPlace(BlockPlaceEvent event) {
     Block block = event.getBlockPlaced();
@@ -18,8 +26,7 @@ public class BlockPlaceEventListener implements Listener {
       Block blockAboveThis =
           player.getWorld().getBlockAt(block.getX(), block.getY() + 1, block.getZ());
       if (blockAboveThis.getType().name().equals("CAMPFIRE")) {
-        new CampfiresConfig(Bukkit.getLogger(), "campfires.json")
-            .addCampfire(
+        this.campfiresConfig.addCampfire(
                 blockAboveThis.getX(), blockAboveThis.getY(), blockAboveThis.getZ(), player);
         player.sendMessage("Campfire created.");
       }
@@ -29,8 +36,7 @@ public class BlockPlaceEventListener implements Listener {
       Block blockBeneathThis =
           player.getWorld().getBlockAt(block.getX(), block.getY() - 1, block.getZ());
       if (blockBeneathThis.getType().name().equals("GOLD_BLOCK")) {
-        new CampfiresConfig(Bukkit.getLogger(), "campfires.json")
-            .addCampfire(block.getX(), block.getY(), block.getZ(), player);
+        this.campfiresConfig.addCampfire(block.getX(), block.getY(), block.getZ(), player);
         player.sendMessage("Campfire created.");
       }
     }
