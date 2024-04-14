@@ -1,13 +1,17 @@
 # Campfires
 A Minecraft server plugin for Minecraft 1.20+ which enables users to place a campfire ontop of a gold block giving them a teleport point accessible within a short period of time after dying.
 
-In summary this plugin:
+## Features
 - Provides an alternative approach to giving users `/home` and `/sethome` to discourage gameplay-altering teleporting such as after mining or when engaging in PVP with other players.
 - Allows players to teleport to one of their campfires within 3 minutes after spawning to reduce frustration after dying
 - Intends for campfires to be destroyable by all players
 - Requires a small grind (9 gold bars) per campfire
 
 ## Developing
+### Foreword
+I am a software engineer but with no professional experience in Java so the quality / style of this repo may not match expectations.
+That said, I have implemented unit tests and tried to apply best practices but I am aware of issues such as how I am handling files (e.g. opening file handles on every function call) but this is very much a "get something working" project at this stage.
+
 ### Building a development server
 You need to make a server JAR to run your server.
 
