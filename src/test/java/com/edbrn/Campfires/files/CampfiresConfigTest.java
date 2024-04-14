@@ -1,7 +1,5 @@
 package com.edbrn.Campfires.files;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,13 +7,17 @@ import java.util.UUID;
 import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CampfiresConfigTest {
   private final String configFile = "campfires-test.json";
 
   @AfterEach
+  @BeforeEach
   public void afterEach() {
     File configFile = new File(this.configFile);
     configFile.delete();
