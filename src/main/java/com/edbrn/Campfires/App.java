@@ -10,7 +10,7 @@ public class App extends JavaPlugin {
         this.getLogger().info("[Campfires] Plugin enabled");
         getServer().getPluginManager().registerEvents(new BlockEvent(), this);
 
-        CampfiresConfig.Campfire[] campfiresConfig = new CampfiresConfig(this.getLogger()).getCampfires();
+        CampfiresConfig.Campfire[] campfiresConfig = new CampfiresConfig(this.getLogger(), "campfires.json").getCampfires();
         for (CampfiresConfig.Campfire campfire : campfiresConfig) {
             this.getLogger().info("[Campfires] " + campfire.x);
         }
