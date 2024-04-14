@@ -1,10 +1,7 @@
 package com.edbrn.Campfires;
 
 import com.edbrn.Campfires.files.CampfiresConfig;
-import com.edbrn.Campfires.files.jsonmodel.Campfire;
 import com.edbrn.Campfires.listeners.BlockPlaceEventListener;
-import java.util.ArrayList;
-import java.util.Map;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class App extends JavaPlugin {
@@ -13,7 +10,9 @@ public class App extends JavaPlugin {
     this.getLogger().info("[Campfires] Plugin enabled");
     CampfiresConfig campfiresConfig = new CampfiresConfig(this.getLogger(), "campfires.json");
 
-    getServer().getPluginManager().registerEvents(new BlockPlaceEventListener(campfiresConfig), this);
+    getServer()
+        .getPluginManager()
+        .registerEvents(new BlockPlaceEventListener(campfiresConfig), this);
   }
 
   @Override
