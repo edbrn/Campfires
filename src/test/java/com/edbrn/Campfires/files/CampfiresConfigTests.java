@@ -15,9 +15,11 @@ import java.util.logging.Logger;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CampfiresConfigTests {
+    private final String configFile = "campfires-test.json";
+
     @AfterEach
     public void afterEach() {
-        File configFile = new File("campfires-test.json");
+        File configFile = new File(this.configFile);
         configFile.delete();
     }
 
@@ -26,7 +28,7 @@ public class CampfiresConfigTests {
         File configFile = new File("campfires-test.json");
         assertFalse(configFile.exists());
 
-        CampfiresConfig config = new CampfiresConfig(Logger.getAnonymousLogger(), "campfires-test.json");
+        CampfiresConfig config = new CampfiresConfig(Logger.getAnonymousLogger(), this.configFile);
         config.getCampfires();
 
         assertTrue(configFile.exists());
@@ -37,11 +39,11 @@ public class CampfiresConfigTests {
         File configFile = new File("campfires-test.json");
         assertFalse(configFile.exists());
 
-        CampfiresConfig config = new CampfiresConfig(Logger.getAnonymousLogger(), "campfires-test.json");
+        CampfiresConfig config = new CampfiresConfig(Logger.getAnonymousLogger(), this.configFile);
         config.getCampfires();
 
         try {
-            String configContent = Files.readString(Path.of("campfires-test.json"));
+            String configContent = Files.readString(Path.of(this.configFile));
             assertEquals(configContent, "{\"campfires\": []}");
         } catch (Exception e) {
             fail(e);
