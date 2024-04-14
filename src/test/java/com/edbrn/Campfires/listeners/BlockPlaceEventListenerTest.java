@@ -83,6 +83,6 @@ public class BlockPlaceEventListenerTest {
         blockPlaceEventListener.onBlockPlace(blockPlaceEvent);
 
         Mockito.verify(world, Mockito.times(1)).getBlockAt(2, 1, 2);
-        Mockito.verify(campfiresConfig, Mockito.times(1)).addCampfire(2, 2, 3, player);
+        Mockito.verify(campfiresConfig, Mockito.times(1)).addCampfire(2, 2, 2, player);
     }
 }
