@@ -7,16 +7,13 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mockito;
 
 import java.util.UUID;
-import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class BlockPlaceEventListenerTests {
+public class BlockPlaceEventListenerTest {
     @Test
     public void testPlacingGoldBlockChecksAboveForCampfire() {
         CampfiresConfig campfiresConfig = Mockito.mock(CampfiresConfig.class);

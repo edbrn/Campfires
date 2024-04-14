@@ -12,7 +12,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-public class CampfiresConfigTests {
+public class CampfiresConfigTest {
   private final String configFile = "campfires-test.json";
 
   @AfterEach
