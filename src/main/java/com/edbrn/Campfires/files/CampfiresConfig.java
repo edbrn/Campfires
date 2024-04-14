@@ -51,6 +51,18 @@ public class CampfiresConfig {
     }
   }
 
+  public ArrayList<Campfire> getCampfires(Player player) {
+    Map<String, ArrayList<Campfire>> campfires = this.getCampfires();
+
+    ArrayList<Campfire> playerCampfires = campfires.get(player.getUniqueId().toString());
+
+    if (playerCampfires == null) {
+      return new ArrayList<>();
+    }
+
+    return playerCampfires;
+  }
+
   public void addCampfire(int x, int y, int z, Player player) {
     UUID uuid = player.getUniqueId();
 
