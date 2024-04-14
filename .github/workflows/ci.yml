@@ -19,8 +19,5 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
-      - name: format
-        run: mvn --batch-mode fmt:check
-
       - name: test
-        run: mvn --batch-mode verify
+        run: mvn --batch-mode fmt:check && mvn --batch-mode verify
