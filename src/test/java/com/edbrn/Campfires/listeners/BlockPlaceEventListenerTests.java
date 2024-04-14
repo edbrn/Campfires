@@ -50,4 +50,40 @@ public class BlockPlaceEventListenerTests {
         Mockito.verify(world, Mockito.times(1)).getBlockAt(1, 2, 1);
         Mockito.verify(campfiresConfig, Mockito.times(1)).addCampfire(1, 2, 1, player);
     }
+
+    @Test
+    public void testPlacingCampfireChecksBelowForGoldBlock() {
+        CampfiresConfig campfiresConfig = Mockito.mock(CampfiresConfig.class);
+
+        BlockPlaceEventListener blockPlaceEventListener = new BlockPlaceEventListener(campfiresConfig);
+
+        BlockPlaceEvent blockPlaceEvent = Mockito.mock(BlockPlaceEvent.class);
+        Block block = Mockito.mock(Block.class);
+        Block blockBelow = Mockito.mock(Block.class);
+        Material material = Mockito.mock(Material.class);
+        Material materialBelow = Mockito.mock(Material.class);
+        World world = Mockito.mock(World.class);
+        Player player = Mockito.mock(Player.class);
+
+        Mockito.when(blockPlaceEvent.getPlayer()).thenReturn(player);
+        Mockito.when(blockPlaceEvent.getBlockPlaced()).thenReturn(block);
+        Mockito.when(block.getType()).thenReturn(material);
+        Mockito.when(material.name()).thenReturn("CAMPFIRE");
+        Mockito.when(blockBelow.getType()).thenReturn(materialBelow);
+        Mockito.when(blockBelow.getX()).thenReturn(1);
+        Mockito.when(blockBelow.getY()).thenReturn(2);
+        Mockito.when(blockBelow.getZ()).thenReturn(1);
+        Mockito.when(materialBelow.name()).thenReturn("GOLD_BLOCK");
+        Mockito.when(player.getWorld()).thenReturn(world);
+        Mockito.when(block.getX()).thenReturn(2);
+        Mockito.when(block.getY()).thenReturn(2);
+        Mockito.when(block.getZ()).thenReturn(2);
+        Mockito.when(world.getBlockAt(2, 1, 2)).thenReturn(blockBelow);
+        Mockito.when(player.getUniqueId()).thenReturn(UUID.randomUUID());
+
+        blockPlaceEventListener.onBlockPlace(blockPlaceEvent);
+
+        Mockito.verify(world, Mockito.times(1)).getBlockAt(2, 1, 2);
+        Mockito.verify(campfiresConfig, Mockito.times(1)).addCampfire(2, 2, 2, player);
+    }
 }
