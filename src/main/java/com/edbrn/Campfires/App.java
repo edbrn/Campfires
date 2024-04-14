@@ -4,16 +4,19 @@ import com.edbrn.Campfires.files.CampfiresConfig;
 import com.edbrn.Campfires.listeners.BlockEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class App extends JavaPlugin {
     @Override
     public void onEnable() {
         this.getLogger().info("[Campfires] Plugin enabled");
         getServer().getPluginManager().registerEvents(new BlockEvent(), this);
 
-        CampfiresConfig.Campfire[] campfiresConfig = new CampfiresConfig(this.getLogger(), "campfires.json").getCampfires();
-        for (CampfiresConfig.Campfire campfire : campfiresConfig) {
-            this.getLogger().info("[Campfires] " + campfire.x);
-        }
+        Map<String, ArrayList<CampfiresConfig.Campfire>> campfiresConfig = new CampfiresConfig(this.getLogger(), "campfires.json").getCampfires();
+        campfiresConfig.forEach((uuid, config) -> {
+            this.getLogger().info("[Campfires] " + uuid);
+        });
     }
 
     @Override
