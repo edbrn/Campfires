@@ -4,6 +4,7 @@ import com.edbrn.Campfires.files.CampfiresConfig;
 import com.edbrn.Campfires.files.jsonmodel.Campfire;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -33,10 +34,30 @@ public class CommandCampfire implements CommandExecutor {
 
     if (subcommand.equalsIgnoreCase("list")) {
       return this.listCommand(sender);
+    } else if (subcommand.equalsIgnoreCase("tp")) {
+      return this.teleportCommand(sender, args);
     }
 
     sender.sendMessage("This isn't a valid campfires command. Try /campfires help");
     return false;
+  }
+
+  private boolean teleportCommand(CommandSender sender, String[] args) {
+    if (args.length != 2) {
+      sender.sendMessage("Usage: /campfires tp <campfire number>");
+      sender.sendMessage("See: /campfires list");
+      return false;
+    }
+
+    if (sender instanceof Player) {
+      Player player = (Player) sender;
+      int campfireNumber = Integer.parseInt(args[1]) - 1;
+
+      Campfire campfire = this.campfiresConfig.getCampfires(player).get(campfireNumber);
+
+      player.teleport(new Location(player.getWorld(), campfire.x + 2, campfire.y, campfire.z));
+    }
+    return true;
   }
 
   private boolean listCommand(CommandSender sender) {
