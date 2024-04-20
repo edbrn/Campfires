@@ -5,6 +5,8 @@ import com.edbrn.Campfires.files.jsonmodel.Campfire;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -43,20 +45,45 @@ public class CommandCampfire implements CommandExecutor {
   }
 
   private boolean teleportCommand(CommandSender sender, String[] args) {
+    if (!sender.hasPermission("campfires.teleport")) {
+      sender.sendMessage("You do not have permission to run this command.");
+      return false;
+    }
+
     if (args.length != 2) {
       sender.sendMessage("Usage: /campfires tp <campfire number>");
       sender.sendMessage("See: /campfires list");
       return false;
     }
 
-    if (sender instanceof Player) {
-      Player player = (Player) sender;
-      int campfireNumber = Integer.parseInt(args[1]) - 1;
+    Player player = (Player) sender;
+    World world = player.getWorld();
+    int campfireNumber = Integer.parseInt(args[1]);
+    int campfireNumberZeroIndex = campfireNumber - 1;
 
-      Campfire campfire = this.campfiresConfig.getCampfires(player).get(campfireNumber);
+    ArrayList<Campfire> campfires = this.campfiresConfig.getCampfires(player);
 
-      player.teleport(new Location(player.getWorld(), campfire.x + 2, campfire.y, campfire.z));
+    if (campfireNumber < 1 || campfireNumber > campfires.size()) {
+      player.sendMessage(
+          String.format("%d isn't a valid campfire. Try /campfires list", campfireNumber));
+      return true;
     }
+
+    Campfire campfire = campfires.get(campfireNumberZeroIndex);
+
+    Location targetLocation =
+        new Location(player.getWorld(), campfire.x + 1.5, campfire.y, campfire.z + 0.5);
+
+    Block targetBlock = world.getBlockAt(targetLocation);
+    Block belowTargetBlock = world.getBlockAt(targetLocation.add(0, -1, 0));
+    Block aboveTargetBlock = world.getBlockAt(targetLocation.add(0, 1, 0));
+
+    if (!targetBlock.isEmpty() || !aboveTargetBlock.isEmpty() || belowTargetBlock.isEmpty()) {
+      player.sendMessage("This campfire is not safe to teleport to.");
+      return true;
+    }
+
+    player.teleport(targetLocation);
     return true;
   }
 
