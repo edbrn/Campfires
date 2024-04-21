@@ -1,5 +1,6 @@
 package com.edbrn.Campfires.files;
 
+import com.edbrn.Campfires.files.exceptions.CampfireLimitReachedException;
 import com.edbrn.Campfires.files.jsonmodel.Campfire;
 import com.edbrn.Campfires.files.jsonmodel.CampfireConfig;
 import com.google.gson.Gson;
@@ -12,6 +13,7 @@ import org.bukkit.entity.Player;
 public class CampfiresConfig {
   private final Logger logger;
   private final String configFilePath;
+  private final int MAXIMUM_CAMPFIRES_PER_PLAYER = 3;
 
   public CampfiresConfig(Logger logger, String configFilePath) {
     this.logger = logger;
@@ -79,8 +81,14 @@ public class CampfiresConfig {
     }
   }
 
-  public Campfire addCampfire(int x, int y, int z, Player player) {
+  public Campfire addCampfire(int x, int y, int z, Player player)
+      throws CampfireLimitReachedException {
     ArrayList<Campfire> playerCampfires = getCampfires(player);
+
+    if (playerCampfires.size() == this.MAXIMUM_CAMPFIRES_PER_PLAYER) {
+      throw new CampfireLimitReachedException();
+    }
+
     Campfire campfire = new Campfire(x, y, z);
     playerCampfires.add(campfire);
 

@@ -2,6 +2,7 @@ package com.edbrn.Campfires.files;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.edbrn.Campfires.files.exceptions.CampfireLimitReachedException;
 import com.edbrn.Campfires.files.jsonmodel.Campfire;
 import java.io.File;
 import java.nio.file.Files;
@@ -60,7 +61,10 @@ public class CampfiresConfigTest {
     UUID uuid = UUID.randomUUID();
     Mockito.when(player.getUniqueId()).thenReturn(uuid);
 
-    config.addCampfire(1, 2, 3, player);
+    try {
+      config.addCampfire(1, 2, 3, player);
+    } catch (CampfireLimitReachedException ignored) {
+    }
 
     try {
       String configContent = Files.readString(Path.of(this.configFile));
@@ -81,8 +85,11 @@ public class CampfiresConfigTest {
     UUID uuid = UUID.randomUUID();
     Mockito.when(player.getUniqueId()).thenReturn(uuid);
 
-    config.addCampfire(1, 2, 3, player);
-    config.addCampfire(222, 333, 444, player);
+    try {
+      config.addCampfire(1, 2, 3, player);
+      config.addCampfire(222, 333, 444, player);
+    } catch (CampfireLimitReachedException ignored) {
+    }
 
     try {
       String configContent = Files.readString(Path.of(this.configFile));
@@ -105,10 +112,13 @@ public class CampfiresConfigTest {
     UUID uuid = UUID.randomUUID();
     Mockito.when(player.getUniqueId()).thenReturn(uuid);
 
-    config.addCampfire(1, 2, 3, player);
-    Campfire campfireToRemove = config.addCampfire(222, 333, 444, player);
+    try {
+      config.addCampfire(1, 2, 3, player);
+      Campfire campfireToRemove = config.addCampfire(222, 333, 444, player);
 
-    config.removeCampfire(player, campfireToRemove);
+      config.removeCampfire(player, campfireToRemove);
+    } catch (CampfireLimitReachedException ignored) {
+    }
 
     try {
       String configContent = Files.readString(Path.of(this.configFile));
@@ -133,9 +143,12 @@ public class CampfiresConfigTest {
     UUID uuid2 = UUID.randomUUID();
     Mockito.when(player2.getUniqueId()).thenReturn(uuid2);
 
-    config.addCampfire(1, 2, 3, player1);
-    config.addCampfire(222, 333, 444, player2);
-    config.addCampfire(555, 212, 119, player2);
+    try {
+      config.addCampfire(1, 2, 3, player1);
+      config.addCampfire(222, 333, 444, player2);
+      config.addCampfire(555, 212, 119, player2);
+    } catch (CampfireLimitReachedException ignored) {
+    }
 
     try {
       String configContent = Files.readString(Path.of(this.configFile));

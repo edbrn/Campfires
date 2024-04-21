@@ -3,6 +3,7 @@ package com.edbrn.Campfires.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.edbrn.Campfires.files.CampfiresConfig;
+import com.edbrn.Campfires.files.exceptions.CampfireLimitReachedException;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -78,7 +79,7 @@ public class CommandCampfireTest {
   }
 
   @Test
-  public void testListCommand() {
+  public void testListCommand() throws CampfireLimitReachedException {
     CampfiresConfig campfiresConfig =
         new CampfiresConfig(Logger.getAnonymousLogger(), this.configFilePath);
     CommandCampfire commandCampfire = new CommandCampfire(campfiresConfig);
@@ -106,7 +107,7 @@ public class CommandCampfireTest {
   }
 
   @Test
-  public void testTeleportCommandInvalidRanges() {
+  public void testTeleportCommandInvalidRanges() throws CampfireLimitReachedException {
     CampfiresConfig campfiresConfig =
         new CampfiresConfig(Logger.getAnonymousLogger(), this.configFilePath);
     CommandCampfire commandCampfire = new CommandCampfire(campfiresConfig);
@@ -150,7 +151,7 @@ public class CommandCampfireTest {
   }
 
   @Test
-  public void testTeleportNotSafeUnderneath() {
+  public void testTeleportNotSafeUnderneath() throws CampfireLimitReachedException {
     CampfiresConfig campfiresConfig =
         new CampfiresConfig(Logger.getAnonymousLogger(), this.configFilePath);
     CommandCampfire commandCampfire = new CommandCampfire(campfiresConfig);
@@ -184,7 +185,7 @@ public class CommandCampfireTest {
   }
 
   @Test
-  public void testTeleportNotSafeAbove() {
+  public void testTeleportNotSafeAbove() throws CampfireLimitReachedException {
     CampfiresConfig campfiresConfig =
         new CampfiresConfig(Logger.getAnonymousLogger(), this.configFilePath);
     CommandCampfire commandCampfire = new CommandCampfire(campfiresConfig);
@@ -218,7 +219,7 @@ public class CommandCampfireTest {
   }
 
   @Test
-  public void testTeleportNotSafeOnBlock() {
+  public void testTeleportNotSafeOnBlock() throws CampfireLimitReachedException {
     CampfiresConfig campfiresConfig =
         new CampfiresConfig(Logger.getAnonymousLogger(), this.configFilePath);
     CommandCampfire commandCampfire = new CommandCampfire(campfiresConfig);
@@ -252,7 +253,7 @@ public class CommandCampfireTest {
   }
 
   @Test
-  public void testTeleportToCampfire() {
+  public void testTeleportToCampfire() throws CampfireLimitReachedException {
     CampfiresConfig campfiresConfig =
         new CampfiresConfig(Logger.getAnonymousLogger(), this.configFilePath);
     CommandCampfire commandCampfire = new CommandCampfire(campfiresConfig);
@@ -288,7 +289,7 @@ public class CommandCampfireTest {
   }
 
   @Test
-  public void testCannotTeleportOutwithThreeMins() {
+  public void testCannotTeleportOutwithThreeMins() throws CampfireLimitReachedException {
     CampfiresConfig campfiresConfig =
         new CampfiresConfig(Logger.getAnonymousLogger(), this.configFilePath);
     CommandCampfire commandCampfire = new CommandCampfire(campfiresConfig);
