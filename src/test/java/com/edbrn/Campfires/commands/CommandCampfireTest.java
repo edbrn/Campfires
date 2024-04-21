@@ -307,7 +307,7 @@ public class CommandCampfireTest {
     Mockito.when(sender.getUniqueId()).thenReturn(playerId);
     Mockito.when(sender.hasPermission("campfires.teleport")).thenReturn(true);
     Mockito.when(sender.getWorld()).thenReturn(world);
-    Mockito.when(sender.getStatistic(Statistic.TIME_SINCE_DEATH)).thenReturn(200);
+    Mockito.when(sender.getStatistic(Statistic.TIME_SINCE_DEATH)).thenReturn(3603);
 
     Command command = Mockito.mock(Command.class);
 
