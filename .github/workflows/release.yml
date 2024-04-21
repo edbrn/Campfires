@@ -32,6 +32,5 @@ jobs:
           automatic_release_tag: "${{ inputs.release_name }}"
           title: "${{ inputs.release_name }}"
           prerelease: false
-          title: "Build"
           files: |
             target/*.jar
