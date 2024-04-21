@@ -3,7 +3,7 @@ name: release
 on:
   push:
     branches:
-      - "version1.0"
+      - "release/*"
 
 jobs:
   release:
@@ -27,7 +27,6 @@ jobs:
         with:
           repo_token: "${{ secrets.RELEASE_TOKEN }}"
           automatic_release_tag: "latest"
-          prerelease: true
           title: "Build"
           files: |
             target/*.jar
