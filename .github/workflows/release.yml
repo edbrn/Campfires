@@ -1,9 +1,11 @@
 name: release
 
 on:
-  push:
-    branches:
-      - "release/*"
+  workflow_dispatch:
+    inputs:
+      release_name:
+        required: true
+        type: string
 
 jobs:
   release:
@@ -26,7 +28,7 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.RELEASE_TOKEN }}"
-          automatic_release_tag: "${{ github.ref_name }}""
+          automatic_release_tag: "${{ inputs.release_name }}""
           title: "Build"
           files: |
             target/*.jar
