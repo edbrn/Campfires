@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Logger;
 import org.bukkit.Location;
+import org.bukkit.Statistic;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -284,5 +285,37 @@ public class CommandCampfireTest {
     assertEquals(2, locationCaptor.getValue().getBlockX());
     assertEquals(2, locationCaptor.getValue().getBlockY());
     assertEquals(3, locationCaptor.getValue().getBlockZ());
+  }
+
+  @Test
+  public void testCannotTeleportOutwithThreeMins() {
+    CampfiresConfig campfiresConfig =
+        new CampfiresConfig(Logger.getAnonymousLogger(), this.configFilePath);
+    CommandCampfire commandCampfire = new CommandCampfire(campfiresConfig);
+
+    Block block = Mockito.mock(Block.class);
+    Mockito.when(block.isEmpty()).thenReturn(true);
+
+    Block belowBlock = Mockito.mock(Block.class);
+    Mockito.when(belowBlock.isEmpty()).thenReturn(false);
+
+    World world = Mockito.mock(World.class);
+    Mockito.when(world.getBlockAt(Mockito.any())).thenReturn(block, belowBlock, block);
+
+    Player sender = Mockito.mock(Player.class);
+    UUID playerId = UUID.randomUUID();
+    Mockito.when(sender.getUniqueId()).thenReturn(playerId);
+    Mockito.when(sender.hasPermission("campfires.teleport")).thenReturn(true);
+    Mockito.when(sender.getWorld()).thenReturn(world);
+    Mockito.when(sender.getStatistic(Statistic.TIME_SINCE_DEATH)).thenReturn(200);
+
+    Command command = Mockito.mock(Command.class);
+
+    String[] args = {"tp", "2"};
+    commandCampfire.onCommand(sender, command, configFilePath, args);
+
+    Mockito.verify(sender)
+        .sendMessage("It has been too long since you last died to teleport to a campfire.");
+    Mockito.verify(sender, Mockito.times(0)).teleport(Mockito.any(Location.class));
   }
 }

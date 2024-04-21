@@ -5,6 +5,7 @@ import com.edbrn.Campfires.files.jsonmodel.Campfire;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import org.bukkit.Location;
+import org.bukkit.Statistic;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -14,6 +15,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class CommandCampfire implements CommandExecutor {
+  private final int MAX_SECONDS_SINCE_DEATH = 60 * 3;
   private CampfiresConfig campfiresConfig;
 
   public CommandCampfire(CampfiresConfig campfiresConfig) {
@@ -60,6 +62,11 @@ public class CommandCampfire implements CommandExecutor {
     World world = player.getWorld();
     int campfireNumber = Integer.parseInt(args[1]);
     int campfireNumberZeroIndex = campfireNumber - 1;
+
+    if (player.getStatistic(Statistic.TIME_SINCE_DEATH) > this.MAX_SECONDS_SINCE_DEATH) {
+      player.sendMessage("It has been too long since you last died to teleport to a campfire.");
+      return true;
+    }
 
     ArrayList<Campfire> campfires = this.campfiresConfig.getCampfires(player);
 
