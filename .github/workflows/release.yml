@@ -26,7 +26,7 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.RELEASE_TOKEN }}"
-          automatic_release_tag: "latest"
+          automatic_release_tag: "${{ github.ref_name }}""
           title: "Build"
           files: |
             target/*.jar
