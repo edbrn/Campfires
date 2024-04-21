@@ -15,7 +15,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class CommandCampfire implements CommandExecutor {
-  private final int MAX_SECONDS_SINCE_DEATH = 60 * 3;
+  private final int MAX_TICKS_SINCE_DEATH = 20 * 60 * 3;
   private CampfiresConfig campfiresConfig;
 
   public CommandCampfire(CampfiresConfig campfiresConfig) {
@@ -63,7 +63,7 @@ public class CommandCampfire implements CommandExecutor {
     int campfireNumber = Integer.parseInt(args[1]);
     int campfireNumberZeroIndex = campfireNumber - 1;
 
-    if (player.getStatistic(Statistic.TIME_SINCE_DEATH) > this.MAX_SECONDS_SINCE_DEATH) {
+    if (player.getStatistic(Statistic.TIME_SINCE_DEATH) > this.MAX_TICKS_SINCE_DEATH) {
       player.sendMessage("It has been too long since you last died to teleport to a campfire.");
       return true;
     }
