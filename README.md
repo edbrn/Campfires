@@ -1,11 +1,19 @@
 # Campfires
-A Minecraft server plugin for Minecraft 1.20+ which enables users to place a campfire ontop of a gold block giving them a teleport point accessible within a short period of time after dying.
+A Minecraft server plugin for Minecraft 1.20+ which enables users to place a campfire ontop of a gold block giving them a teleport point accessible within a 3 minutes of dying.
 
 ## Features
-- Provides an alternative approach to giving users `/home` and `/sethome` to discourage gameplay-altering teleporting such as after mining or when engaging in PVP with other players.
-- Allows players to teleport to one of their campfires within 3 minutes after spawning to reduce frustration after dying
-- Intends for campfires to be destroyable by all players
-- Requires a small grind (9 gold bars) per campfire
+- Provides an alternative approach to giving users `/home` and `/sethome` to discourage gameplay-altering teleporting such as after mining or when engaged in PVP with other players.
+- Allows players to teleport to one of their campfires within 3 minutes after dying giving this player more opportunity to try to repel raiders but also giving raiders less safety.
+- Intends for campfires to be destroyable by all players.
+- Requires a small grind (9 gold bars) per campfire.
+- Each player can have a maximum of 3 campfires.
+
+## Installation
+- Download the JAR file from the [releases](https://github.com/edbrn/Campfires/releases/) tab.
+- Place the JAR file in your server's `plugins` folder and restart your server.
+
+## Files managed by Campfires
+Only one: `campfires.json` file will be created in the root of the server directory. It contains a JSON object with one key called `campfires` where the child's key is the UUID of the player and the value is a list of objects containing the coordinates keyed `x`, `y` and `z` respectively.
 
 ## Developing
 ### Foreword
