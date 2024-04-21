@@ -2,6 +2,7 @@ package com.edbrn.Campfires.files;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.edbrn.Campfires.files.jsonmodel.Campfire;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -89,6 +90,30 @@ public class CampfiresConfigTest {
           String.format(
               "{\"campfires\":{\"%s\":[{\"x\":1,\"y\":2,\"z\":3},{\"x\":222,\"y\":333,\"z\":444}]}}",
               uuid.toString()),
+          configContent);
+    } catch (Exception e) {
+      fail(e);
+    }
+  }
+
+  @Test
+  public void testRemoveCampfire() {
+    CampfiresConfig config = new CampfiresConfig(Logger.getAnonymousLogger(), this.configFile);
+    config.getCampfires();
+
+    Player player = Mockito.mock(Player.class);
+    UUID uuid = UUID.randomUUID();
+    Mockito.when(player.getUniqueId()).thenReturn(uuid);
+
+    config.addCampfire(1, 2, 3, player);
+    Campfire campfireToRemove = config.addCampfire(222, 333, 444, player);
+
+    config.removeCampfire(player, campfireToRemove);
+
+    try {
+      String configContent = Files.readString(Path.of(this.configFile));
+      assertEquals(
+          String.format("{\"campfires\":{\"%s\":[{\"x\":1,\"y\":2,\"z\":3}]}}", uuid.toString()),
           configContent);
     } catch (Exception e) {
       fail(e);

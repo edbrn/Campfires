@@ -44,8 +44,9 @@ public class CampfiresConfig {
 
       JsonReader reader = new JsonReader(new FileReader(this.configFilePath));
       CampfireConfig config = gson.fromJson(reader, CampfireConfig.class);
+      reader.close();
       return config.campfires;
-    } catch (FileNotFoundException e) {
+    } catch (IOException e) {
       this.logger.info("failed to load campfires.json: " + e.getMessage());
       return null;
     }
@@ -63,25 +64,44 @@ public class CampfiresConfig {
     return playerCampfires;
   }
 
-  public void addCampfire(int x, int y, int z, Player player) {
-    UUID uuid = player.getUniqueId();
+  private void setCampfires(Player player, ArrayList<Campfire> campfires) {
+    Map<String, ArrayList<Campfire>> config = getCampfires();
 
-    Map<String, ArrayList<Campfire>> campfires = getCampfires();
-    ArrayList<Campfire> existingCampfires = campfires.get(uuid.toString());
-
-    ArrayList<Campfire> playerCampfires =
-        (existingCampfires != null) ? existingCampfires : new ArrayList<Campfire>();
-    playerCampfires.add(new Campfire(x, y, z));
-
-    campfires.put(uuid.toString(), playerCampfires);
+    config.put(player.getUniqueId().toString(), campfires);
 
     try {
       Gson gson = new Gson();
       FileWriter writer = new FileWriter(this.configFilePath);
-      gson.toJson(new CampfireConfig(campfires), writer);
+      gson.toJson(new CampfireConfig(config), writer);
       writer.close();
     } catch (IOException e) {
       this.logger.info("Failed to write campfire.");
+    }
+  }
+
+  public Campfire addCampfire(int x, int y, int z, Player player) {
+    ArrayList<Campfire> playerCampfires = getCampfires(player);
+    Campfire campfire = new Campfire(x, y, z);
+    playerCampfires.add(campfire);
+
+    setCampfires(player, playerCampfires);
+
+    return campfire;
+  }
+
+  public void removeCampfire(Player player, Campfire campfire) {
+    ArrayList<Campfire> campfires = this.getCampfires(player);
+
+    for (int i = 0; i < this.getCampfires().get(player.getUniqueId().toString()).size(); i++) {
+      Campfire thisCampfire = campfires.get(i);
+
+      if (thisCampfire.x == campfire.x
+          && thisCampfire.y == campfire.y
+          && thisCampfire.z == campfire.z) {
+        campfires.remove(i);
+        setCampfires(player, campfires);
+        return;
+      }
     }
   }
 }
