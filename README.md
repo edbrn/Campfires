@@ -25,10 +25,6 @@ A Minecraft server plugin for Minecraft 1.20+ which enables users to place a cam
 Only one: `campfires.json` file will be created in the root of the server directory. It contains a JSON object with one key called `campfires` where the child's key is the UUID of the player and the value is a list of objects containing the coordinates keyed `x`, `y` and `z` respectively.
 
 ## Developing
-### Foreword
-I am a software engineer but with no professional experience in Java so the quality / style of this repo may not match expectations.
-That said, I have implemented unit tests and tried to apply best practices but I am aware of issues such as how I am handling files (e.g. opening file handles on every function call) but this is very much a "get something working" project at this stage.
-
 ### Automated tests
 #### Unit tests
 Run `mvn test` to run the unit tests.
