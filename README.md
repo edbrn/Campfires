@@ -12,6 +12,15 @@ A Minecraft server plugin for Minecraft 1.20+ which enables users to place a cam
 - Download the JAR file from the [releases](https://github.com/edbrn/Campfires/releases/) tab.
 - Place the JAR file in your server's `plugins` folder and restart your server.
 
+## Commands
+### `/campfires list`
+- Lists campfires for the player executing the command.
+- Permission required: `campfires.list`
+
+### `/campfires tp <number>`
+- Teleports the player to the numbered campfire as shown in the list command.
+- Permission required: `campfires.teleport`
+
 ## Files managed by Campfires
 Only one: `campfires.json` file will be created in the root of the server directory. It contains a JSON object with one key called `campfires` where the child's key is the UUID of the player and the value is a list of objects containing the coordinates keyed `x`, `y` and `z` respectively.
 
