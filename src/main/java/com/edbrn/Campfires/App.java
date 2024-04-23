@@ -17,7 +17,9 @@ public class App extends JavaPlugin {
 
     server.getPluginManager().registerEvents(new BlockPlaceEventListener(campfiresConfig), this);
 
-    server.getPluginManager().registerEvents(new BlockBreakEventListener(campfiresConfig), this);
+    server
+        .getPluginManager()
+        .registerEvents(new BlockBreakEventListener(campfiresConfig, server), this);
 
     this.getCommand("campfires").setExecutor(new CommandCampfire(campfiresConfig));
   }
